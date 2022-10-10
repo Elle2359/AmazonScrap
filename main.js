@@ -68,9 +68,10 @@ app.post('/search',(req,response) => {
         let html = res.data;
         let dom = new jsdom.JSDOM(html);
         let document = dom.window.document;
-        let maindiv = document.querySelectorAll('[class="_1YokD2 _3Mn1Gg"]')
-        let product = maindiv[1].querySelectorAll('[class="_1AtVbE col-12-12"]')
-        let divType = product[0].querySelectorAll('[data-id]');
+        let maindiv = document.getElementsByClassName("_1YokD2 _3Mn1Gg")
+        let product = maindiv[1].querySelectorAll("#_1AtVbE col-12-12")
+        //let divType = product[0].getElementsByClassName('_13oc-S');
+        let mainproduct =product[0].querySelectorAll('#data-id')
         console.log(divType.length);
         let productName = [];
         let productPrice = [];
@@ -78,9 +79,9 @@ app.post('/search',(req,response) => {
         let productImg = [];
         let productLink = [];
         let finalProduct
-        if(divType.length==1){
+        if(mainproduct.length==1){
             finalProduct = product;
-            for (let i = 2; i < 5; i++) {
+            for (let i = 0; i < 5; i++) {
                 productName.push(finalProduct[i].querySelector('[class="_4rR01T"]').textContent);
                 productPrice.push(finalProduct[i].querySelector('[class="_30jeq3 _1_WHN1"]').textContent);
                 productRating.push(finalProduct[i].querySelector('[class="_3LWZlK"]').textContent);
@@ -88,7 +89,7 @@ app.post('/search',(req,response) => {
                 productLink.push("https://www.flipkart.com"+finalProduct[i].querySelector('a').href);
             }
         }else{
-            finalProduct = divType;
+            finalProduct = mainproduct;
             for (let i = 0; i < 3; i++) {
                 productName.push(finalProduct[i].querySelector('[class="s1Q9rs"]').textContent);
                 productPrice.push(finalProduct[i].querySelector('[class="_30jeq3"]').textContent);
